@@ -4,6 +4,88 @@
 <html lang="en">
   <head>
     <title>Site</title>
+    <meta name="_token" content="{{csrf_token()}}" />
+    <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css"/>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js">
+    </script>
+    <script>
+
+    function mySelectBox(){
+
+      var letters = jQuery('#region').val();
+
+
+       $.ajaxSetup({
+          headers: {
+              'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+          }
+      });
+       jQuery.ajax({
+          url: "{{ url('/search') }}",
+          method: 'post',
+          data: {
+            letters: letters
+          },
+          success: function(result){
+
+
+
+         var box = jQuery('#select-box');
+         box.detach();
+
+             var div = document.createElement("div");
+             div.id = "select-box";
+             div.style.width = "100%";
+             div.style.height = "128px";
+             div.style.border = "1px solid #AAAAAA";
+             div.style.background = "#ffffff";
+                          var div_html = "";
+                          $.each(result, function(index, value){
+                            div_html+="<div class='unselectable'>"+value+"</div>";
+                         });
+                          div.innerHTML = div_html;
+             document.getElementById("select").appendChild(div);
+
+
+
+             $(".unselectable").click(function(elem){
+               document.getElementById("region").value = $(this).text();
+
+               var box = jQuery('#select-box');
+               box.detach();
+             });
+
+             $('body').click(function(){
+
+                           var box = jQuery('#select-box');
+                           box.detach();
+                         });
+
+              $('#region').focus(function(){
+              mySelectBox();
+              });
+
+          }});
+
+
+       }
+
+      jQuery(document).ready(function(){
+
+         jQuery('#region').keyup(function(){
+           mySelectBox();
+         });
+
+         $('body').click(function(){
+
+                       var box = jQuery('#select-box');
+                       box.detach();
+                     });
+
+         });
+
+
+    </script>
 
     <style>
         html, body {
@@ -24,7 +106,7 @@
             align-items: center;
             display: flex;
             justify-content: center;
-            min-width: 550px;
+            min-width: 600px;
         }
 
 
@@ -67,29 +149,65 @@
           background: #EEEEEE;
           position: absolute;
           top: 100px;
-          width: 97%;
-          left: 20px;
-          right: 20px;
+          width: 95%;
+          left: 5%;
+          right: 5%;
         }
 
-        .input-text {
+        .input-reg {
+          position: absolute;
+          left: 0%;
+          width: 20%;
+        }
+
+        .input-seller {
+          position: absolute;
+          left: 21%;
           width: 30%;
         }
-        .input-reg {
-          width: 15%;
+        .input-type {
+          position: absolute;
+          left: 52%;
+          width: 30%;
         }
         .input-sub {
-          width: 6%;
-          min-width: 50px;
+          position: absolute;
+          left: 82%;
+          width: 10%;
+        }
+        .select {
+          position: absolute;
+          top:30px;
+          left: 0px;
+          width: 20%;
         }
         .m-b-md {
             margin-bottom: 30px;
         }
+        .unselectable {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+                                  not supported by any browser */
+                                  position: relative;
+                                  left: 1px;
+                                   width:98.5%;
+                                  height:25px;background:white;
+overflow: hidden;
+
+}
+.unselectable:hover {background: #eeeeee;
+color: #aaaaaa;
+}
     </style>
     <!-- CSS и JavaScript -->
   </head>
 
   <body>
+
     <div class="flex-center position-ref full-height">
 
 
@@ -104,35 +222,31 @@
       <img src="/images/logo.png"/>
       </div>
 
-      <div class="search-form">
+      <div class="search-form" id="search-form">
         <form action="/" method="get">
         <div>
-          <select class="input-reg" id="region" name="region">
-            <option value>Область</option>
-            <option value="1">Санк-Петербург</option>
-            <option value="2">Москва</option>
-            <option value="3">Псковская</option>
-            <option value="4"></option>
-            <option value="5"></option>
 
-          </select>
-          <select class="input-reg" id="city" name="city">
-            <option value>Город</option>
-            <option value="1">Псков</option>
-            <option value="2">Великие Луки</option>
-          </select>
-          <input class="input-text" type="text" name="seller" placeholder="Поставщик">
-          <input class="input-text" type="text" name="type" placeholder="Модель">
-          <input  class="input-sub" type="submit" value="Найти">
-        </div>
-        <div>
 
+
+          <input class="input-reg"   type="text" name="region" id="region"
+           placeholder="Область" autocomplete="off">
+          <input class="input-seller" type="text" name="seller" placeholder="Поставщик">
+          <input class="input-type" type="text" name="type" placeholder="Модель">
+          <input  class="input-sub" type="submit" value="Найти" id="ajaxSubmit">
+          <div class="select" id="select">
+
+
+
+          </div>
         </div>
+
       </form>
-      </div>
 
+      </div>
 
     @yield('content')
   </div>
   </body>
+  все работает здесь
+  все еще работает
 </html>

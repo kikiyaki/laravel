@@ -12,3 +12,8 @@
 */
 
 Route::get('/', 'HomeController@index');
+
+Route::post('/search', 'ajax\SearchController@index');
+
+Route::view('/grocery', 'grocery');
+Route::post('/grocery/post', 'GroceryController@store');

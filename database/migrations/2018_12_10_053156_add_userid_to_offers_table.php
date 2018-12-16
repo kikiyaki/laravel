@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJoinTable extends Migration
+class AddUseridToOffersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,8 @@ class CreateJoinTable extends Migration
      */
     public function up()
     {
-        Schema::create('join', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::table('offers', function (Blueprint $table) {
             $table->integer('user_id');
-            $table->integer('offer_id');
-            $table->integer('type_id');
-            $table->integer('number');
-            $table->timestamps();
         });
     }
 
@@ -30,6 +25,8 @@ class CreateJoinTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('join');
+        Schema::table('offers', function (Blueprint $table) {
+            //
+        });
     }
 }

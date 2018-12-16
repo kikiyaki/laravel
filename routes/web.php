@@ -12,8 +12,11 @@
 */
 
 Route::get('/', 'HomeController@index');
+Route::get('/offer', 'OfferController@index');
 
 Route::post('/search', 'ajax\SearchController@index');
 
-Route::view('/grocery', 'grocery');
-Route::post('/grocery/post', 'GroceryController@store');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

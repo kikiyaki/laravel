@@ -4,101 +4,22 @@
 <html lang="en">
   <head>
     <title>Site</title>
-    <meta name="_token" content="{{csrf_token()}}" />
+
     <link href="{{asset('css/app.css')}}" rel="stylesheet" type="text/css"/>
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js">
-    </script>
-    <script>
 
-    function mySelectBox(){
-
-      var letters = jQuery('#region').val();
-
-
-       $.ajaxSetup({
-          headers: {
-              'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-          }
-      });
-       jQuery.ajax({
-          url: "{{ url('/search') }}",
-          method: 'post',
-          data: {
-            letters: letters
-          },
-          success: function(result){
-
-
-
-         var box = jQuery('#select-box');
-         box.detach();
-
-             var div = document.createElement("div");
-             div.id = "select-box";
-             div.style.width = "100%";
-             div.style.height = "128px";
-             div.style.border = "1px solid #AAAAAA";
-             div.style.background = "#ffffff";
-                          var div_html = "";
-                          $.each(result, function(index, value){
-                            div_html+="<div class='unselectable'>"+value+"</div>";
-                         });
-                          div.innerHTML = div_html;
-             document.getElementById("select").appendChild(div);
-
-
-
-             $(".unselectable").click(function(elem){
-               document.getElementById("region").value = $(this).text();
-
-               var box = jQuery('#select-box');
-               box.detach();
-             });
-
-             $('body').click(function(){
-
-                           var box = jQuery('#select-box');
-                           box.detach();
-                         });
-
-              $('#region').focus(function(){
-              mySelectBox();
-              });
-
-          }});
-
-
-       }
-
-      jQuery(document).ready(function(){
-
-         jQuery('#region').keyup(function(){
-           mySelectBox();
-         });
-
-         $('body').click(function(){
-
-                       var box = jQuery('#select-box');
-                       box.detach();
-                     });
-
-         });
-
-
-    </script>
 
     <style>
         html, body {
-            background-color: #fff;
+            background-color: #eee;
             color: #636b6f;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
-            height: 200px;
+
             margin: 0;
         }
 
         .full-height {
-            height: 100vh;
+            min-height: 100%;
         }
 
         .flex-center {
@@ -106,7 +27,7 @@
             align-items: center;
             display: flex;
             justify-content: center;
-            min-width: 600px;
+            min-width: 800px;
         }
 
 
@@ -172,7 +93,7 @@
         }
         .input-sub {
           position: absolute;
-          left: 82%;
+          left: 83%;
           width: 10%;
         }
         .select {
@@ -202,6 +123,15 @@ overflow: hidden;
 .unselectable:hover {background: #eeeeee;
 color: #aaaaaa;
 }
+.box_container {
+  position: absolute;
+  top: 150px;
+  width: 80%;
+max-width: 800px;
+  min-width: 700px;
+
+  background: white;
+}
     </style>
     <!-- CSS и JavaScript -->
   </head>
@@ -222,31 +152,12 @@ color: #aaaaaa;
       <img src="/images/logo.png"/>
       </div>
 
-      <div class="search-form" id="search-form">
-        <form action="/" method="get">
-        <div>
 
-
-
-          <input class="input-reg"   type="text" name="region" id="region"
-           placeholder="Область" autocomplete="off">
-          <input class="input-seller" type="text" name="seller" placeholder="Поставщик">
-          <input class="input-type" type="text" name="type" placeholder="Модель">
-          <input  class="input-sub" type="submit" value="Найти" id="ajaxSubmit">
-          <div class="select" id="select">
-
-
-
-          </div>
-        </div>
-
-      </form>
-
-      </div>
-
+<div class="box_container">
     @yield('content')
+    </div>
   </div>
+
   </body>
-  все работает здесь
-  все еще работает
+
 </html>

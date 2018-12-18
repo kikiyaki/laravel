@@ -13,7 +13,7 @@
 <script type="text/javascript">
 
 var val = ["0"];
-
+//number check function
 function validate(evt) {
   var theEvent = evt || window.event;
 
@@ -45,8 +45,8 @@ function validate(evt) {
   <a href="/offer?id={{$offer->id}}" class="seller">{{$offer->seller}}</a>
 </div>
 
-  <div style="height:350px;width:350px;">
-<img src="/images/nofoto2.png"/>
+<div style="height:350px;width:350px;">
+	<img src="/images/nofoto2.png"/>
 </div>
 {{$offer->descr}}
 <div style="height: 10px;">
@@ -58,19 +58,19 @@ function validate(evt) {
 
 @if ($model->offer_id == $offer->id)
 
-<h4>{{$model->name}}</h4>
+	<h4>{{$model->name}}</h4>
 
 @foreach ($joins as $join)
 @if ($join->type_id==$model->id)
-Вы собираетесь приобрести
+	Вы собираетесь приобрести
 {{$join->number}} из {{$model->total}}
-<form action="/add" method="post">
+	<form action="/add" method="post">
   @CSRF
-<input type="text" style="width:50px;" name="amount" onkeypress='validate(event)'/>
-<input type="submit" value="Добавить" name="add"/>
-<input type="submit" value="Убрать" name="remove"/>
-<input type="text" name="join_id" value="{{$join->id}}" style="display:none"/>
-</form>
+		<input type="text" style="width:50px;" name="amount" onkeypress='validate(event)'/>
+		<input type="submit" value="Добавить" name="add"/>
+		<input type="submit" value="Убрать" name="remove"/>
+		<input type="text" name="join_id" value="{{$join->id}}" style="display:none"/>
+	</form>
 @endif
 @endforeach
 
@@ -81,7 +81,6 @@ function validate(evt) {
 @endforeach
 
 <div style="height:20px">
-
 </div>
 
 

@@ -9,17 +9,17 @@
 <script src="http://code.jquery.com/jquery-3.3.1.min.js">
 </script>
 <script>
-
+//creating city selection window function
 function mySelectBox(){
 
   var letters = jQuery('#region').val();
-
 
    $.ajaxSetup({
       headers: {
           'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
       }
-  });
+    });
+    //send request
    jQuery.ajax({
       url: "{{ url('/search') }}",
       method: 'post',
@@ -28,23 +28,22 @@ function mySelectBox(){
       },
       success: function(result){
 
-
-
-     var box = jQuery('#select-box');
-     box.detach();
-
+        var box = jQuery('#select-box');
+        box.detach();
+        //create select box
          var div = document.createElement("div");
          div.id = "select-box";
          div.style.width = "100%";
          div.style.height = "128px";
          div.style.border = "1px solid #AAAAAA";
          div.style.background = "#ffffff";
-                      var div_html = "";
-                      $.each(result, function(index, value){
-                        div_html+="<div class='unselectable'>"+value+"</div>";
+
+         var div_html = "";
+         $.each(result, function(index, value){
+          div_html+="<div class='unselectable'>"+value+"</div>";
                      });
-                      div.innerHTML = div_html;
-         document.getElementById("select").appendChild(div);
+                     div.innerHTML = div_html;
+                     document.getElementById("select").appendChild(div);
 
 
 
@@ -56,7 +55,7 @@ function mySelectBox(){
          });
 
          $('body').click(function(){
-
+                      //delete box
                        var box = jQuery('#select-box');
                        box.detach();
                      });
@@ -66,13 +65,11 @@ function mySelectBox(){
           });
 
       }});
-
-
    }
 
   jQuery(document).ready(function(){
 
-     jQuery('#region').keyup(function(){
+      jQuery('#region').keyup(function(){
        mySelectBox();
      });
 
@@ -81,14 +78,11 @@ function mySelectBox(){
                    var box = jQuery('#select-box');
                    box.detach();
                  });
-
      });
-
-
 </script>
 </head>
 <script type="text/javascript">
-
+//add input fields for new model
 function addModel(button) {
     var id = button.id.substring(6);
     var newId = Number(id)+1;
@@ -130,7 +124,7 @@ function addModel(button) {
     var number = document.getElementById('number');
     number.value = newId;
   }
-
+  //check number
     function validate(evt) {
       var theEvent = evt || window.event;
 
@@ -157,37 +151,37 @@ function addModel(button) {
 <form action="/create" method="post">
   @CSRF
   <div class="margin3">
-Регион:
-</br>
-<input type="text" style="width:400px;" name="region" id="region"/>
-<div id="select" style="width:250px;position:absolute;">
-</div>
-</br>
-Поставщик:
-</br>
-<input type="text" style="width:400px;" name="seller"/>
-<div id="models">
-<div id="model">
-Наименование товара:
-</br>
-<input type="text" style="width:400px;" name="model_name1"/>
-</br>
-Количество:
-</br>
-<input type="text" style="width:100px;" name="number1"  onkeypress='validate(event)'/>
+  Регион:
+  </br>
+  <input type="text" style="width:400px;" name="region" id="region"/>
+  <div id="select" style="width:250px;position:absolute;">
+  </div>
+  </br>
+  Поставщик:
+  </br>
+  <input type="text" style="width:400px;" name="seller"/>
+  <div id="models">
+    <div id="model">
+      Наименование товара:
+      </br>
+      <input type="text" style="width:400px;" name="model_name1"/>
+      </br>
+      Количество:
+      </br>
+      <input type="text" style="width:100px;" name="number1"  onkeypress='validate(event)'/>
 
-<div style="height:10px;">
-</div>
-</div>
-<input type="button" onclick="addModel(this)" id="button1" value="Добавить товар">
-</div>
-<div style="height:10px;">
-</div>
-Описание:</br>
-<textarea rows="3" style="width:400px;" name="descr"></textarea>
-</br>
-<input type="submit" value="Создать">
-<input type="text" name="number" value="1" style="display:none;" id="number"/>
+      <div style="height:10px;">
+      </div>
+    </div>
+    <input type="button" onclick="addModel(this)" id="button1" value="Добавить товар">
+  </div>
+  <div style="height:10px;">
+  </div>
+  Описание:</br>
+  <textarea rows="3" style="width:400px;" name="descr"></textarea>
+  </br>
+  <input type="submit" value="Создать">
+  <input type="text" name="number" value="1" style="display:none;" id="number"/>
 </form>
 </div>
 @endsection

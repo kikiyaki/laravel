@@ -89,8 +89,8 @@
 
     <style>
         html, body {
-            background-color: #eee;
-            color: #636b6f;
+            background-color: #F8F8F4;
+            color: #7289B2;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
 
@@ -102,7 +102,7 @@
         }
 
         .flex-center {
-          background: #EEEEEE;
+          background: #F8F8F4;
             align-items: center;
             display: flex;
             justify-content: center;
@@ -115,13 +115,13 @@
         }
 
         .top-right {
-          background: #EEEEEE;
+          background: #F8F8F4;
             position: absolute;
             right: 20px;
             top: 10px;
         }
         .top-left {
-          background: #EEEEEE;
+          background: #F8F8F4;
             position: absolute;
             left: 20px;
             top: 10px;
@@ -136,13 +136,16 @@
         }
 
         .links > a {
-            color: #636b6f;
+            color: #8281EF;
             padding: 0 7px;
             font-size: 12px;
             font-weight: 600;
             letter-spacing: .1rem;
             text-decoration: none;
             text-transform: uppercase;
+        }
+        .links > a:hover {
+          color: #F56A60;
         }
 
         .search-form {
@@ -177,9 +180,9 @@
         }
         .select {
           position: absolute;
-          top:30px;
-          left: 0px;
-          width: 20%;
+          top:130px;
+          left: 5%;
+          width: 19%;
         }
         .m-b-md {
             margin-bottom: 30px;
@@ -202,14 +205,15 @@ overflow: hidden;
 .unselectable:hover {background: #eeeeee;
 color: #aaaaaa;
 }
+
 .box_container {
-  position: absolute;
+  position: relative;
   top: 150px;
   width: 80%;
 max-width: 800px;
   min-width: 700px;
 
-  background: white;
+  background: #FAFAFA;
 }
     </style>
     <!-- CSS и JavaScript -->
@@ -221,14 +225,22 @@ max-width: 800px;
 
 
       <div class="top-right links">
-              <a href="#">Купить</a>
-              <a href="#">Создать</a>
-              <a href="#">Кабинет</a>
-              <a href="#">Вход</a>
+              <a href="/">Главная</a>
+              <a href="/new_offer">Создать</a>
+              <a href="/cabinet">Кабинет</a>
+
+@if (Auth::check())
+<a href="/out">Выход</a>
+@else
+<a href="/login">Вход</a>
+@endif
+
       </div>
 
       <div class="top-left">
+        <a  href="/">
       <img src="/images/logo.png"/>
+    </a>
       </div>
 
       <div class="search-form" id="search-form">
@@ -238,17 +250,12 @@ max-width: 800px;
 
 
           <input class="input-reg"   type="text" name="region" id="region"
-           placeholder="Область" autocomplete="off" value="{{$region}}">
+           placeholder="Город" autocomplete="off" value="{{$region}}">
           <input class="input-seller" type="text" name="seller"
           placeholder="Поставщик" value="{{$seller}}">
           <input class="input-type" type="text" name="type"
           placeholder="Модель" value="{{$type}}">
           <input  class="input-sub" type="submit" value="Найти" id="ajaxSubmit">
-          <div class="select" id="select">
-
-
-
-          </div>
         </div>
 
       </form>
@@ -256,6 +263,8 @@ max-width: 800px;
       </div>
 <div class="box_container">
     @yield('content')
+    </div>
+    <div id="select" class="select">
     </div>
   </div>
 

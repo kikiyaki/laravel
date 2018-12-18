@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Auth;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +15,19 @@ Route::get('/', 'HomeController@index');
 Route::get('/offer', 'OfferController@index');
 
 Route::post('/search', 'ajax\SearchController@index');
+Route::post('/join', 'JoinController@index');
+Route::post('/add', 'AddController@index');
+Route::post('/create', 'CreateController@index');
 
+Route::get('/cabinet', 'CabinetController@index');
+Route::get('/out', function() {
+  Auth::logout();
+  return redirect()->back();
+});
+
+Route::get('/new_offer', function(){
+  return view('create');
+})->middleware('auth');
 
 Auth::routes();
 

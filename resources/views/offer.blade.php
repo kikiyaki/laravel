@@ -30,21 +30,27 @@
   font-weight:bold
 }
 .model {
-  position: relative;
+  position: absolute;
   left:0px;
   height:25px;
   width:280px;
 
 }
 .model_bar {
-  height:21px;
+  height:27px;
   width:250px;
   position:absolute;
   left:290px;
   border: 1px solid #777;
 }
+.join_model {
+  width:250px;
+  position:absolute;
+  left:550px;
+
+}
 .progr {
-  height: 19px;
+  height: 25px;
   background: #999;
 }
 .margin5 {
@@ -53,7 +59,26 @@
 </style>
 
 <script type="text/javascript">
+
 var val = ["0"];
+
+function validate(evt) {
+  var theEvent = evt || window.event;
+
+  // Handle paste
+  if (theEvent.type === 'paste') {
+      key = event.clipboardData.getData('text/plain');
+  } else {
+  // Handle key press
+      var key = theEvent.keyCode || theEvent.which;
+      key = String.fromCharCode(key);
+  }
+  var regex = /[0-9]|\./;
+  if( !regex.test(key) ) {
+    theEvent.returnValue = false;
+    if(theEvent.preventDefault) theEvent.preventDefault();
+  }
+}
 </script>
 
 @extends('head')
@@ -71,6 +96,15 @@ var val = ["0"];
   <div class="model_bar">
     <div class="progr" id="progr{{$model->id}}">
     </div>
+  </div>
+  <div class="join_model">
+    <form action="/join" method="post">
+      @CSRF
+      <input type="text" style="width:40px;" name="amount" onkeypress='validate(event)'>
+      <input type="submit" value="Участвовать">
+      <input type="text" style="display:none;" name="model_id" value="{{$model->id}}">
+      <input type="text" style="display:none;" name="offer_id" value="{{$offer_result[0]->id}}">
+    </form>
   </div>
 <table>
 <tr>
@@ -115,10 +149,5 @@ val.forEach(function(current) {
   }
   document.getElementById("progr".concat(current)).style.width = width_prog;
 });
-//var a = "aaaaaa";
-//alert("progr{{$model->id}}");
-//alert("{{$number_joins}}");
-//alert("{{$model->total}}");
-//document.getElementById("progr{{$model->id}}").style.width("{{$number_joins/$model->total*250}}px");
 </script>
 @endsection

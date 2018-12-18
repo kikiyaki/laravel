@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        
+
     }
 
     /**
@@ -24,6 +25,8 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+    //  $auth = Auth::check();
+
       if (isset($_REQUEST['seller'])) {
 
         $last_id = 0;
@@ -34,19 +37,7 @@ class HomeController extends Controller
             $next = false;
           }
         }
-/*
-if ($_REQUEST['region']=="")
-$region = "ййййй";
-else $region = $_REQUEST['region'];
 
-if ($_REQUEST['seller']=="")
-$seller = "ййййй";
-else $seller = $_REQUEST['seller'];
-if ($_REQUEST['type']=="")
-$type = "ййййй";
-else $type = $_REQUEST['type'];
-*/
-//database Query
 $query = "";
 if ($next) {
 $query = "select * from offers where (id IN

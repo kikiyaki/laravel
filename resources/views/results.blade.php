@@ -20,11 +20,11 @@
   margin:0px;
 }
 .seller a:hover {
-	color: #ccc;
+	color: #F56A60;
 	text-decoration: none;
 }
 .seller a{
-  color:#555;
+  color:#8281EF;
   font-size: 20px;
 	text-decoration: none;
   font-weight:bold
@@ -45,7 +45,7 @@
 }
 .progr {
   height: 19px;
-  background: #999;
+  background: #9291FF;
 }
 </style>
 <script type="text/javascript">
@@ -112,10 +112,6 @@ val[val.length] = [{{$model->id}}];
 
 @endforeach
 
-
-<div style="width:100%;height:30px;background:black;
-position:relative;bottom:0px;">
-</div>
 <script type="text/jscript">
 val.shift();
 val.forEach(function(current) {
@@ -129,10 +125,5 @@ val.forEach(function(current) {
   }
   document.getElementById("progr".concat(current)).style.width = width_prog;
 });
-//var a = "aaaaaa";
-//alert("progr{{$model->id}}");
-//alert("{{$number_joins}}");
-//alert("{{$model->total}}");
-//document.getElementById("progr{{$model->id}}").style.width("{{$number_joins/$model->total*250}}px");
 </script>
 @endsection

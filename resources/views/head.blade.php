@@ -10,7 +10,7 @@
 
     <style>
         html, body {
-            background-color: #eee;
+            background-color: #F8F8F4;
             color: #636b6f;
             font-family: 'Nunito', sans-serif;
             font-weight: 200;
@@ -23,7 +23,7 @@
         }
 
         .flex-center {
-          background: #EEEEEE;
+          background: #F8F8F4;
             align-items: center;
             display: flex;
             justify-content: center;
@@ -36,13 +36,13 @@
         }
 
         .top-right {
-          background: #EEEEEE;
+          background: #F8F8F4;
             position: absolute;
             right: 20px;
             top: 10px;
         }
         .top-left {
-          background: #EEEEEE;
+          background: #F8F8F4;
             position: absolute;
             left: 20px;
             top: 10px;
@@ -57,13 +57,16 @@
         }
 
         .links > a {
-            color: #636b6f;
+            color: #8281EF;
             padding: 0 7px;
             font-size: 12px;
             font-weight: 600;
             letter-spacing: .1rem;
             text-decoration: none;
             text-transform: uppercase;
+        }
+        .links > a:hover {
+          color: #F56A60;
         }
 
         .search-form {
@@ -142,14 +145,22 @@ max-width: 800px;
 
 
       <div class="top-right links">
-              <a href="#">Купить</a>
-              <a href="#">Создать</a>
-              <a href="#">Кабинет</a>
-              <a href="#">Вход</a>
+              <a href="/">Главная</a>
+              <a href="/new_offer">Создать</a>
+              <a href="/cabinet">Кабинет</a>
+
+@if (Auth::check())
+<a href="/out">Выход</a>
+@else
+<a href="/login">Вход</a>
+@endif
+
       </div>
 
       <div class="top-left">
+        <a  href="/">
       <img src="/images/logo.png"/>
+    </a>
       </div>
 
 

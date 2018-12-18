@@ -15,15 +15,15 @@ class AddController extends Controller
       $result_number = DB::select($query_select);
       $number = $result_number[0]->number;
 
-      if (isset($_REQUEST['add'])) {
-        $number+=$_REQUEST['amount'];
-      } else {
-        $number-=$_REQUEST['amount'];
-      }
+        if (isset($_REQUEST['add'])) {
+          $number+=$_REQUEST['amount'];
+        } else {
+          $number-=$_REQUEST['amount'];
+        }
 
-      if ($number <= 0) {
-        $number = 0;
-      }
+        if ($number <= 0) {
+          $number = 0;
+        }
 
       $query_update = "UPDATE joins SET number=".$number."
        WHERE id=".$_REQUEST['join_id'];

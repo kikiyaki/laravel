@@ -29,7 +29,6 @@ class JoinController extends Controller
       } else {
         $query = "UPDATE joins SET number=".($result[0]->number+$_REQUEST['amount'])."
         WHERE id=".$result[0]->id.";";
-
       }
 
      DB::select($query);

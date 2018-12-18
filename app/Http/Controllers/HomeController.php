@@ -26,59 +26,64 @@ class HomeController extends Controller
     public function index(Request $request)
     {
     //  $auth = Auth::check();
-
       if (isset($_REQUEST['seller'])) {
 
         $last_id = 0;
         $next = true;
+
         if (isset($_REQUEST['last_id'])) {
+
           $last_id = $_REQUEST['last_id'];
+
           if (isset($_REQUEST['back'])) {
             $next = false;
           }
+
         }
 
-$query = "";
-if ($next) {
-$query = "select * from offers where (id IN
-(select offer_id from types where name like '%".$_REQUEST['type']."%')
-or descr like '%".$_REQUEST['type']."%'
-)
-and  seller like '%".$_REQUEST['seller']."%'
-and city like '%".$_REQUEST['region']."%'
-and id>".$last_id."
-order by id desc LIMIT 10;";
-} else {
-  $query = "select * from offers where (id IN
-  (select offer_id from types where name like '%".$_REQUEST['type']."%')
-  or descr like '%".$_REQUEST['type']."%'
-  )
-  and  seller like '%".$_REQUEST['seller']."%'
-  and city like '%".$_REQUEST['region']."%'
-  and id<".$last_id."
-  order by id desc LIMIT 10;";
-}
-$results = DB::select($query);
+        $query = "";
+        if ($next) {
+          $query = "select * from offers where (id IN
+          (select offer_id from types where name like '%".$_REQUEST['type']."%')
+          or descr like '%".$_REQUEST['type']."%'
+          )
+          and  seller like '%".$_REQUEST['seller']."%'
+          and city like '%".$_REQUEST['region']."%'
+          and id>".$last_id."
+          order by id desc LIMIT 10;";
+        } else {
+          $query = "select * from offers where (id IN
+          (select offer_id from types where name like '%".$_REQUEST['type']."%')
+          or descr like '%".$_REQUEST['type']."%'
+          )
+          and  seller like '%".$_REQUEST['seller']."%'
+          and city like '%".$_REQUEST['region']."%'
+          and id<".$last_id."
+          order by id desc LIMIT 10;";
+        }
 
-$models_query = "select id, offer_id, name, total from types
-where offer_id in (0";
+        $results = DB::select($query);
 
-foreach ($results as $result) {
-  $models_query.=",".($result->id);
-}
-$models_query.=");";
+        $models_query = "select id, offer_id, name, total from types
+        where offer_id in (0";
 
-$models_results = DB::select($models_query);
+          foreach ($results as $result) {
+            $models_query.=",".($result->id);
+          }
 
-$joins_query = "select offer_id, type_id, number from joins where offer_id in (0";
-foreach ($results as $result) {
-  $joins_query.=",".($result->id);
-}
-$joins_query.=");";
+        $models_query.=");";
 
-$joins_results = DB::select($joins_query);
+        $models_results = DB::select($models_query);
 
-$number_joins = 0;
+        $joins_query = "select offer_id, type_id, number from joins where offer_id in (0";
+          foreach ($results as $result) {
+            $joins_query.=",".($result->id);
+          }
+          $joins_query.=");";
+
+          $joins_results = DB::select($joins_query);
+
+          $number_joins = 0;
 
       return view('results', ['region' => $_REQUEST['region'],
     'seller' => $_REQUEST['seller'],
@@ -87,8 +92,7 @@ $number_joins = 0;
     ->with('models_results', $models_results)
     ->with('joins_results', $joins_results);
 
-
-  }
+    }
       else
       return view('index', ['region' => '',
     'seller' => '',

@@ -22,14 +22,13 @@ class CreateController extends Controller
 
 
       for ($i=1;$i<=$_REQUEST['number'];$i++) {
+
         $query="INSERT INTO types (offer_id, name, total)
         VALUES ('".$id_result[0]->id."', '".$_REQUEST['model_name'.$i]."',
         '".$_REQUEST['number'.$i]."');";
 
         DB::select($query);
       }
-
-
 
       return redirect('/offer?id='.$id_result[0]->id);
 

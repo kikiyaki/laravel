@@ -12,8 +12,6 @@ class CabinetController extends Controller
       $this->middleware('auth');
     }
 
-
-
     public function index(Request $request) {
       $user_id = Auth::id();
 
